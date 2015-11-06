@@ -57,7 +57,7 @@ def get_all_tweets(screen_name, consumer_key, consumer_secret, access_key, acces
 
 if __name__ == '__main__':
 	#Get Twitter API Credentials from File
-	consumer_key, consumer_secret = extract_keys("APIKeys.json")
+	consumer_key, consumer_secret = extract_keys("../data/APIKeys.json")
 	access_key = ""
 	access_secret = ""
 	#pass in the username of the account you want to download
