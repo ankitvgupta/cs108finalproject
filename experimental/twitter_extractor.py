@@ -3,12 +3,13 @@
 
 import tweepy #https://github.com/tweepy/tweepy
 import csv
+import json
 
 # returns the consumer_secret and consumer_keys from JSON file with API keys.
 def extract_keys(keys_file_name):
 	with open(keys_file_name) as keys_file:    
 	    data = json.load(keys_file)
-	    return data['consumer_secret'], data['consumer_key']
+	    return str(data['consumer_secret']), str(data['consumer_key'])
 
 def get_all_tweets(screen_name, consumer_key, consumer_secret, access_key, access_secret):
 	#Twitter only allows access to a users most recent 3240 tweets with this method
