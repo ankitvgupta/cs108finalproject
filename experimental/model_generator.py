@@ -28,13 +28,13 @@ def getAllKMers(K, list_of_strings):
             
 
 
-def buildModel(K, list_kmers):
+def buildModel(list_kmers):
     model = defaultdict(lambda : defaultdict(int))
     for kmer in list_kmers:
         current_words = tuple(kmer[:-1])
         next_word = kmer[-1]
         model[current_words][next_word] += 1
-    print model
+    return model
     
 
         
