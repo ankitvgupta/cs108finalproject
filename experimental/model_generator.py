@@ -4,19 +4,6 @@
 from collections import defaultdict
 import csv
 import numpy as np
-# Given a string, get's K-mers of length K
-#" dsf asfd adf asdf adsf asdf adsf adsf asdf"
-# https://wiki.python.org/moin/Generators
-
-# returns a generator for the KMers from a string
-def getKMers(K, string):
-    
-    #tokenize string
-    lst = string.split()
-    
-    #iterate through list and grab KMers
-    for x in range (len(lst) - K + 1):
-        yield lst[x:x+K]
 
 def getAllKMers(K, list_of_strings):
     for string in list_of_strings:

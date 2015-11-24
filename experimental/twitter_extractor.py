@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+import sys
 import tweepy #https://github.com/tweepy/tweepy
 import csv
 import json
@@ -57,13 +58,11 @@ def get_all_tweets(screen_name, consumer_key, consumer_secret, access_key, acces
 		writer.writerow(["id","created_at","text"])
 		writer.writerows(outtweets)
 	
-
 if __name__ == '__main__':
 	#Get Twitter API Credentials from File
 	consumer_key, consumer_secret = extract_keys("../data/APIKeys.json")
 	access_key = ""
 	access_secret = ""
 	#pass in the username of the account you want to download
-	get_all_tweets("katyperry", consumer_key, consumer_secret, access_key, access_secret)
-
+	get_all_tweets(sys.argv[1], consumer_key, consumer_secret, access_key, access_secret)
 

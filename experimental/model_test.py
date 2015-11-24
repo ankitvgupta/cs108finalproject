@@ -1,42 +1,55 @@
+import sys
 import csv
 import numpy as np
-filename = "BarackObama_tweets.csv"
-
 from model_generator import getAllKMers, buildModel, getStartingKMers, getNextWord
 
+def main(argv):
 
-tweets = []
+	#initialize array of tweets
+	tweets = []
 
-with open(filename, 'r') as tweetsfile:
-	csvreader = csv.reader(tweetsfile, delimiter=',')
-	for line in csvreader:
-		tweets.append(line[-1])
+	#populate tweets array with contents of tweets file
+	with open(argv[1], 'r') as tweetsfile:
+		csvreader = csv.reader(tweetsfile, delimiter=',')
+		for line in csvreader:
+			tweets.append(line[-1])
 
-K = 2
-kmers = getAllKMers(K, tweets)
-model = buildModel(kmers)
+	#DEFINE length of a single KMer
+	K = 3
 
-starting_kmers = getStartingKMers(K-1, tweets)
-number_starting_kmers = len(starting_kmers)
-for i in range(100):
-	sentence = starting_kmers[np.random.choice(range(len(starting_kmers)))]
-	for i in range(20):
-		current_phrase = tuple(sentence[-K + 1:])
-		frequencies = model[current_phrase]
-		next_word = getNextWord(frequencies)
-		if next_word == None:
-			break
-		sentence.append(next_word)
-		#print sentence
-		#print frequencies
-	print " ".join(sentence)
+	#build Markov model
+	kmers = getAllKMers(K, tweets)
+	model = buildModel(kmers)
+	starting_kmers = getStartingKMers(K-1, tweets)
 
+	#begin loop to generate n novel tweets
+	for i in range(100):
 
+		#randomly pick a starting KMer
+		sentence = starting_kmers[np.random.choice(range(len(starting_kmers)))]
 
+		#generate rest of sentence using Markov chain
+		for i in range(20):
 
-print buildModel([["hello", "my", "name"], ["hello", "my", "dog"], ["here", "i", "am"], ["hello", "my", "dog"]])
-#(hello, my) -> (name: 1), (dog: 2)
-#(here, i) -> (am, 1)
+			#select most recently-generated KMer
+			current_phrase = tuple(sentence[-K + 1:])
 
-# given a dictionary of word -> frequency mappings, returns a word proporirtional to its freqeuncy
+			#get occurrence frequencies for most recent KMer
+			frequencies = model[current_phrase]
 
+			#generate the next word
+			next_word = getNextWord(frequencies)
+
+			#if no next word, end the sentence
+			if next_word == None:
+				break
+
+			#append the next word to the sentence
+			sentence.append(next_word)
+
+		#flatten the sentence array into a string and print
+		print " ".join(sentence)
+	return
+
+if __name__ == "__main__":
+	main(sys.argv)
