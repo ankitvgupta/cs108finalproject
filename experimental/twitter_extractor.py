@@ -64,6 +64,6 @@ if __name__ == '__main__':
 	access_key = ""
 	access_secret = ""
 	#pass in the username of the account you want to download
-	get_all_tweets("BarackObama", consumer_key, consumer_secret, access_key, access_secret)
+	get_all_tweets("katyperry", consumer_key, consumer_secret, access_key, access_secret)
 
 
