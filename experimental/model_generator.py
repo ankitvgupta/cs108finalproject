@@ -26,7 +26,13 @@ def getAllKMers(K, list_of_strings):
         for x in range (len(lst) - K + 1):
             yield lst[x:x+K]
             
+def getStartingKMers(K, list_of_strings):
+    results = []
+    for string in list_of_strings:
+        lst = string.split()
 
+        results.append(lst[x:x+K])
+    return results
 
 def buildModel(list_kmers):
     model = defaultdict(lambda : defaultdict(int))
@@ -36,6 +42,7 @@ def buildModel(list_kmers):
         model[current_words][next_word] += 1
     return model
     
+
 
         
         
