@@ -31,7 +31,7 @@ def getStartingKMers(K, list_of_strings):
     for string in list_of_strings:
         lst = string.split()
 
-        results.append(lst[x:x+K])
+        results.append(lst[:K])
     return results
 
 def buildModel(list_kmers):

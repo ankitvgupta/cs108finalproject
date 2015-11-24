@@ -2,7 +2,7 @@ import csv
 import numpy as np
 filename = "BarackObama_tweets.csv"
 
-from model_generator import getAllKMers, buildModel
+from model_generator import getAllKMers, buildModel, getStartingKMers
 
 
 tweets = []
@@ -16,3 +16,5 @@ K = 3
 kmers = getAllKMers(K, tweets)
 model = buildModel(kmers)
 
+starting_kmers = getStartingKMers(K-1, tweets)
+print starting_kmers
