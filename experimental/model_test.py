@@ -9,11 +9,10 @@ def main(infile, K):
 	#initialize array of tweets
 	tweets = []
 
+	fpath = os.path.join("../data/", infile)
+	
 	#populate tweets array with contents of tweets file
-	path = "../data/"
-	path_to_file = os.path.join(path, infile)
-
-	with open(path_to_file, 'r') as tweetsfile:
+	with open(fpath, 'r') as tweetsfile:
 		csvreader = csv.reader(tweetsfile, delimiter=',')
 		for line in csvreader:
 			tweets.append(line[-1])

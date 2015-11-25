@@ -52,7 +52,11 @@ def get_all_tweets(screen_name, consumer_key, consumer_secret, access_key, acces
 		print "getting tweets before %s" % (oldest)
 		
 		#all subsiquent requests use the max_id param to prevent duplicates
-		new_tweets = api.user_timeline(screen_name = screen_name,count=200,max_id=oldest)
+		new_tweets = api.user_timeline(screen_name = screen_name,
+									   count = 200,
+									   max_id = oldest,
+									   exclude_replies = True, #excludes all @ replies
+									   include_rts = False) #excludes all native retweets
 		
 		#save most recent tweets
 		alltweets.extend(new_tweets)
@@ -66,10 +70,9 @@ def get_all_tweets(screen_name, consumer_key, consumer_secret, access_key, acces
 	outtweets = [[tweet.id_str, tweet.created_at, tweet.text.encode("utf-8")] for tweet in alltweets]
 
 	#write the csv
-	path = "../data/"
-	path_to_file = os.path.join(path, outfile)
+	fpath = os.path.join("../data/", outfile)
 	
-	with open(path_to_file, 'wb') as f:
+	with open(fpath, 'wb') as f:
 		writer = csv.writer(f)
 		writer.writerow(["id","created_at","text"])
 		writer.writerows(outtweets)

@@ -1,3 +1,4 @@
+import os.path
 import argparse
 import twitter_extractor
 import model_test
@@ -18,8 +19,11 @@ target = args.target 		  #Twitter handle
 raw_file = "%s.csv" % args.f  #Raw data file
 k = args.k 					  #Size of KMer
 
-#Pull tweets from Twitter API and store data in outfile
-twitter_extractor.main(target, raw_file)
+#Check if data file for target already exists
+fpath = os.path.join("../data/", raw_file)
+if (os.path.isfile(fpath) == False):
+	#Pull tweets from Twitter API and store data in outfile
+	twitter_extractor.main(target, raw_file)
 
 #Build and run Markov model
 model_test.main(raw_file, k)
