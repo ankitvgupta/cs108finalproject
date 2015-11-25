@@ -1,21 +1,22 @@
 import sys
+import os.path
 import csv
 import numpy as np
 from model_generator import getAllKMers, buildModel, getStartingKMers, getNextWord
 
-def main(argv):
+def main(infile, K):
 
 	#initialize array of tweets
 	tweets = []
 
 	#populate tweets array with contents of tweets file
-	with open(argv[1], 'r') as tweetsfile:
+	path = "../data/"
+	path_to_file = os.path.join(path, infile)
+
+	with open(path_to_file, 'r') as tweetsfile:
 		csvreader = csv.reader(tweetsfile, delimiter=',')
 		for line in csvreader:
 			tweets.append(line[-1])
-
-	#DEFINE length of a single KMer
-	K = 3
 
 	#build Markov model
 	kmers = getAllKMers(K, tweets)
@@ -52,4 +53,11 @@ def main(argv):
 	return
 
 if __name__ == "__main__":
-	main(sys.argv)
+	if len(sys.argv) != 3:
+		print "Usage: model_test.py <tweet_data.csv>"
+		sys.exit(2)
+
+	infile = sys.argv[1]
+	K = sys.argv[2]
+
+	main(infile, K)
