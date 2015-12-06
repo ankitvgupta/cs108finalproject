@@ -7,14 +7,28 @@ import tweepy #https://github.com/tweepy/tweepy
 import csv
 import json
 
-def main(target_user, outfile):
+def main(target_users, outfile):
 	#Get Twitter API Credentials from File
 	consumer_key, consumer_secret = extract_keys("../data/APIKeys.json")
 	access_key = ""
 	access_secret = ""
 
 	#pass in the username of the account you want to download
-	get_all_tweets(target_user, consumer_key, consumer_secret, access_key, access_secret, outfile)
+	results = []
+	for user in target_users:
+		print user
+		outtweets = get_all_tweets(user, consumer_key, consumer_secret, access_key, access_secret, outfile)
+		results.append(outtweets)
+	#write the csv
+	fpath = os.path.join("../data/", outfile)
+	
+	with open(fpath, 'wb') as f:
+		for result in results:
+			writer = csv.writer(f)
+			writer.writerow(["id","created_at","text"])
+			writer.writerows(result)
+
+	print "\n*** Successfully downloaded all recent tweets from @%s" % ",".join(target_users)
 
 # returns the consumer_secret and consumer_keys from JSON file with API keys.
 def extract_keys(keys_file_name):
@@ -36,13 +50,13 @@ def get_all_tweets(screen_name, consumer_key, consumer_secret, access_key, acces
 	
 	#initialize a list to hold all the tweepy Tweets
 	alltweets = []	
-	
+
 	#make initial request for most recent tweets (200 is the maximum allowed count)
 	new_tweets = api.user_timeline(screen_name = screen_name,count=200)
-	
+
 	#save most recent tweets
 	alltweets.extend(new_tweets)
-	
+
 	#save the id of the oldest tweet less one
 	oldest = alltweets[-1].id - 1
 	
@@ -51,7 +65,7 @@ def get_all_tweets(screen_name, consumer_key, consumer_secret, access_key, acces
 	while len(new_tweets) > 0:
 		print "getting tweets before %s" % (oldest)
 		
-		#all subsiquent requests use the max_id param to prevent duplicates
+		#all subsequent requests use the max_id param to prevent duplicates
 		new_tweets = api.user_timeline(screen_name = screen_name,
 									   count = 200,
 									   max_id = oldest,
@@ -68,16 +82,9 @@ def get_all_tweets(screen_name, consumer_key, consumer_secret, access_key, acces
 	
 	#transform the tweepy tweets into a 2D array that will populate the csv	
 	outtweets = [[tweet.id_str, tweet.created_at, tweet.text.encode("utf-8")] for tweet in alltweets]
+	return outtweets
 
-	#write the csv
-	fpath = os.path.join("../data/", outfile)
-	
-	with open(fpath, 'wb') as f:
-		writer = csv.writer(f)
-		writer.writerow(["id","created_at","text"])
-		writer.writerows(outtweets)
 
-	print "\n*** Successfully downloaded all recent tweets from @%s" % screen_name
 	
 if __name__ == '__main__':
 	
@@ -87,4 +94,4 @@ if __name__ == '__main__':
 		sys.exit(2)
 
 	#call main
-	main(sys.argv[1], sys.argv[1] + '.csv')
+	main([sys.argv[1]], sys.argv[1] + '.csv')
