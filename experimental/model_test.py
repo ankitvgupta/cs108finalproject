@@ -29,7 +29,7 @@ def main(infile, K):
 		sentence = starting_kmers[np.random.choice(range(len(starting_kmers)))]
 
 		#generate rest of sentence using Markov chain
-		for i in range(20):
+		for j in range(20):
 
 			#select most recently-generated KMer
 			current_phrase = tuple(sentence[-K + 1:])
@@ -53,10 +53,10 @@ def main(infile, K):
 
 if __name__ == "__main__":
 	if len(sys.argv) != 3:
-		print "Usage: model_test.py <tweet_data.csv>"
+		print "Usage: model_test.py <tweet_data.csv> K"
 		sys.exit(2)
 
 	infile = sys.argv[1]
-	K = sys.argv[2]
+	K = int(sys.argv[2])
 
 	main(infile, K)
