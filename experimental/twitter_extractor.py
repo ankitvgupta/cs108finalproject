@@ -22,7 +22,7 @@ def main(target_users, outfile):
 	#write the csv
 	fpath = os.path.join("../data/", outfile)
 	
-	with open(fpath, 'wb') as f:
+	with open(fpath, 'a') as f:
 		for result in results:
 			writer = csv.writer(f)
 			writer.writerow(["id","created_at","text"])
