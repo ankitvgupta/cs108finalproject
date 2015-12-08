@@ -4,6 +4,7 @@
 from collections import defaultdict
 import csv
 import numpy as np
+import os
 
 def getAllKMers(K, list_of_strings):
     for string in list_of_strings:
@@ -41,6 +42,22 @@ def getNextWord(freq_dictionary):
     word = np.random.choice(words, size=1, p=probabilities)
     return word[0]
 
+def getModelAndTweetsFromFile(infile, K):
+    #initialize array of tweets
+    tweets = []
+
+    fpath = os.path.join("../data/", infile)
+    
+    #populate tweets array with contents of tweets file
+    with open(fpath, 'r') as tweetsfile:
+        csvreader = csv.reader(tweetsfile, delimiter=',')
+        for line in csvreader:
+            tweets.append(line[-1])
+
+    #build Markov model
+    kmers = getAllKMers(K, tweets)
+    model = buildModel(kmers)
+    return model, tweets
 
     
 
