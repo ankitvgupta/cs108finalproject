@@ -52,7 +52,8 @@ def generateSentencesAndCheckErrors(infile, K):
 	print res
 	return res
 
-
+def checkIfSentenceInDatabase(sentence, tweets):
+    return sentence in tweets
 
 def main(infile, K):
 
@@ -76,11 +77,23 @@ def main(infile, K):
 	starting_kmers = getStartingKMers(K-1, tweets)
 
 	#begin loop to generate n novel tweets
-	for i in range(100):
+	#
+	i = 0
+	while i < 100:
 
 		#randomly pick a starting KMer
 		sentence = starting_kmers[np.random.choice(range(len(starting_kmers)))]
-		print generateSentenceFromStartingKmer(sentence,K, 20, model)
+		generated_tweet = generateSentenceFromStartingKmer(sentence,K, 20, model)
+		# If the tweet was one of the originals, get another one.
+		if checkIfSentenceInDatabase(generated_tweet, tweets):
+			continue
+		print generated_tweet
+		i += 1
+		#print generateSentenceFromStartingKmer(sentence,K, 20, model)
+
+        #print tmp
+        #print generated_sentence
+        #print checkIfSentenceInDatabase(sentence, tweets)
 		# #generate rest of sentence using Markov chain
 		# for j in range(20):
 
