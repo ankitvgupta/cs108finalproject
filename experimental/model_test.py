@@ -79,8 +79,9 @@ def main(infile, K):
 	#begin loop to generate n novel tweets
 	#
 	i = 0
-	while i < 100:
-
+	tries = 0
+	while i < 100 and tries < 1000:
+		tries += 1
 		#randomly pick a starting KMer
 		sentence = starting_kmers[np.random.choice(range(len(starting_kmers)))]
 		generated_tweet = generateSentenceFromStartingKmer(sentence,K, 20, model)
