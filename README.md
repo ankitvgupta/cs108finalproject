@@ -1,4 +1,3 @@
-This directory is for experimental parts of the project. Various attempts at querying data, text processing, etc, will occur here.
 
 # Usage
 1. Get Twitter API keys.
