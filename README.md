@@ -20,5 +20,5 @@ This directory is for experimental parts of the project. Various attempts at que
 - [comparison.py](src/comparison.py): Contains functions to compare words/sentences for quantitative analysis.
 
 # Dependencies
-numpy, scipy, tweepy
+[numpy](http://www.numpy.org), [scipy](http://scipy.org), [Tweepy](http://www.tweepy.org), [NLTK](http://www.nltk.org)
 
