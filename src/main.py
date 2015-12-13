@@ -8,10 +8,10 @@ def run_tweet_generator(targets, k):
 	fpath = os.path.join("../data/", raw_file)
 	if (os.path.isfile(fpath) == False):
 		#Pull tweets from Twitter API and store data in outfile
-		twitter_extractor.main(targets, raw_file)
+		twitter_extractor.save_users_tweets_to_file(targets, raw_file)
 
 	#Build and run Markov model
-	model_test.main(raw_file, k)
+	model_test.generateTweetsFromFile(raw_file, k)
 
 
 if __name__ == "__main__":
@@ -27,20 +27,3 @@ if __name__ == "__main__":
 	print args.names
 	run_tweet_generator(args.names, args.k)
 
-#Default to target twitter handle if no file name specified
-#if (args.f == None):
-#	args.f = args.target
-
-#targets = args.names 		  #Twitter handle
-#raw_file = "%s.csv" % f  #Raw data file
-#raw_file = f
-#k = args.k 					  #Size of KMer
-
-#Check if data file for target already exists
-#fpath = os.path.join("../data/", raw_file)
-#if (os.path.isfile(fpath) == False):
-#	#Pull tweets from Twitter API and store data in outfile
-#	twitter_extractor.main(targets, raw_file)
-
-#Build and run Markov model
-#model_test.main(raw_file, k)

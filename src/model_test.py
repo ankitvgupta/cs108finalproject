@@ -58,7 +58,7 @@ def generateSentencesAndCheckErrors(infile, K):
 def checkIfSentenceInDatabase(sentence, tweets):
     return sentence in tweets
 
-def main(infile, K):
+def generateTweetsFromFile(infile, K):
 
 	#initialize array of tweets
 	model, tweets = getModelAndTweetsFromFile(infile, K)
@@ -129,5 +129,4 @@ if __name__ == "__main__":
 	infile = sys.argv[1]
 	K = int(sys.argv[2])
 
-	#main(infile, K)
 	generateSentencesAndCheckErrors(infile, K)

@@ -7,7 +7,7 @@ import tweepy #https://github.com/tweepy/tweepy
 import csv
 import json
 
-def main(target_users, outfile):
+def save_users_tweets_to_file(target_users, outfile):
 	#Get Twitter API Credentials from File
 	consumer_key, consumer_secret = extract_keys("../data/APIKeys.json")
 	access_key = ""
@@ -94,4 +94,4 @@ if __name__ == '__main__':
 		sys.exit(2)
 
 	#call main
-	main([sys.argv[1]], sys.argv[1] + '.csv')
+	save_users_tweets_to_file([sys.argv[1]], sys.argv[1] + '.csv')
