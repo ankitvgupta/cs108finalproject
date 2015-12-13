@@ -39,7 +39,7 @@ def match_sentence_lengths(sentence1, sentence2):
 def generateSentencesAndCheckErrors(infile, K):
 	model, tweets = getModelAndTweetsFromFile(infile, K)
 	res = []
-	for i in range(10):
+	for i in range(100):
 		random_tweet = np.random.choice(tweets)
 		tweet_start = random_tweet.split(" ")[:K-1]
 		num_words_wanted = len(random_tweet.split(" ")) - (K-1)
@@ -47,9 +47,12 @@ def generateSentencesAndCheckErrors(infile, K):
 		updated_tweet, updated_generated_sentence = match_sentence_lengths(random_tweet, generated_sentence)
 		#print "Updates", updated_tweet, updated_generated_sentence
 		result = compareSentences(updated_tweet, updated_generated_sentence)
+		if result == None:
+			continue
 		res.append(result)
 		sys.stdout.flush()
 	print res
+	print "Average:", sum(res)/float(len(res))
 	return res
 
 def checkIfSentenceInDatabase(sentence, tweets):
