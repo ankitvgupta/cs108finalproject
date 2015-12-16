@@ -7,6 +7,7 @@
     - Navigate to the `src` directory
     - Run `python main.py --names <NAME1> <NAME2> ...` where each of the `NAMEi` can be replaced with a twitter handle.
     - The code will pull tweets and save them to the `data` directory
+    - This will also print generated tweets to the console
 3. Determine sentence similarity
     - Navigate to the `src` directory
     - Run `python model_test.py <tweet_file> <K>`, where `<tweet_file>` is the relative path to a file in the data folder (for example, ../data/Harvard.csv), and `K` designates how big your K-mer will be. K must be at least 2.
